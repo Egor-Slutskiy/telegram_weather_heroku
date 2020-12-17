@@ -41,12 +41,21 @@ public class TelegramFacade {
             inputMsg = message.getLocation().toString();
         }
 
-        botState = switch (inputMsg) {
-            case "/start" -> BotState.START_STATE;
-            case "/weather" -> BotState.WAIT_LOCATION;
-            case "/subscribe" -> BotState.SUBSCRIBE_STATE;
-            case "/unsubscribe" -> BotState.UNSUBSCRIBE_STATE;
-            default -> userDataCache.getUsersCurrentBotState(userId);
+        switch (inputMsg) {
+            case "/start":
+                botState = BotState.START_STATE;
+                break;
+            case "/weather":
+                botState = BotState.WAIT_LOCATION;
+                break;
+            case "/subscribe":
+                botState = BotState.SUBSCRIBE_STATE;
+                break;
+            case "/unsubscribe":
+                botState = BotState.UNSUBSCRIBE_STATE;
+                break;
+            default:
+                botState = userDataCache.getUsersCurrentBotState(userId);
         };
 
         userDataCache.setUserCurrentBotState(userId, botState);
